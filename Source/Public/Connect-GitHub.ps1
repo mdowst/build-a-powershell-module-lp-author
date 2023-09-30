@@ -2,15 +2,15 @@ Function Connect-GitHub {
     <#
     .SYNOPSIS
     Creates a prebuilt header and URI builder for communicating with the GitHub API
-    
+
     .DESCRIPTION
     Creates a prebuilt header and URI builder for communicating with the GitHub API
-    
+
     .PARAMETER Token
     A secure string with your personal access token
 
     https://github.com/settings/tokens?type=beta
-    
+
     .EXAMPLE
     $token = ConvertTo-SecureString 'github_pat_hkalsdkasdkasdkjahskdjhaksdjhajksdhksdh' -AsPlainText -Force
     Connect-GitHub -Token $token
@@ -26,14 +26,13 @@ Function Connect-GitHub {
     $Api = "2022-11-28"
 
     $Uri = [System.UriBuilder]::new("https", $UriHost, 443)
-    
 
     $PAT = ConvertFrom-SecureString -SecureString $Token -AsPlainText
     $headers = @{
         "X-GitHub-Api-Version" = $Api
         "Authorization"        = "Bearer $($PAT)"
     }
-    
+
     $RestMethod = @{
         Uri     = $Uri.Uri
         Headers = $headers
@@ -46,7 +45,7 @@ Function Connect-GitHub {
         $request = $null
         $failure = $_.Exception.Message
     }
-    
+
     if ($request) {
         $script:__GitHubAuth = [pscustomobject]@{
             Headers = $Headers
