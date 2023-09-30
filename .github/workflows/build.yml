@@ -8,12 +8,13 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
-        env: # Or as an environment variable
-          GITHUBTOKEN: ${{ secrets.GITHUBTOKEN }}
-          TOKENOWNER: ${{ secrets.TOKENOWNER }}
+    
 
       - name: Install from ModuleBuilder
         shell: pwsh
         run: |
           [string]::IsNullOrEmpty($env:TOKENOWNER)
+        env: # Or as an environment variable
+          GITHUBTOKEN: ${{ secrets.GITHUBTOKEN }}
+          TOKENOWNER: ${{ secrets.TOKENOWNER }}
 
