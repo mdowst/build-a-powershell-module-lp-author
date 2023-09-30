@@ -123,10 +123,10 @@ Function Update-GitHubRepo {
     [CmdletBinding()]
     param(
         [Parameter(Mandatory = $true)]    
-        $Owner,
+        [string]$Owner,
         
         [Parameter(Mandatory = $true)]
-        $Repo,
+        [string]$Repo,
         
         [Parameter(Mandatory = $false)]
         [string]$Name,

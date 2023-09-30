@@ -25,10 +25,10 @@ Function Get-GitHubRepo{
     [CmdletBinding()]
     param(
         [Parameter(Mandatory = $true)]    
-        $Owner,
+        [string]$Owner,
         
         [Parameter(Mandatory = $true)]
-        $Repo
+        [string]$Repo
     )
 
     $Path = "/repos/$($Owner)/$($Repo)"
