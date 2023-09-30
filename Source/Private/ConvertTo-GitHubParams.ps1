@@ -33,10 +33,10 @@ Function ConvertTo-GitHubJsonBody{
         $ka = $_.Key.ToCharArray()
         for($i = 0; $i - $ka.Count; $i++){
             if([int]$ka[$i] -lt 97){
-                $key += $ka[$i].ToString().ToLower()
                 if($i -gt 0){
                     $key += '_'
                 }
+                $key += $ka[$i].ToString().ToLower()
             }
             else{
                 $key += $ka[$i]

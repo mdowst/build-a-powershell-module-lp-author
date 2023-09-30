@@ -5,11 +5,11 @@ Function New-GitHubUserRepo {
 
 	.DESCRIPTION
 	Creates a new repository for the authenticated user.
-	
+
 	**OAuth scope requirements**
-	
+
 	When using [OAuth](https://docs.github.com/apps/building-oauth-apps/understanding-scopes-for-oauth-apps/), authorizations must include:
-	
+
 	*   `public_repo` scope or `repo` scope to create a public repository. Note: For GitHub AE, use `repo` scope to create an internal repository.
 	*   `repo` scope to create a private repository.
 
@@ -66,26 +66,26 @@ Function New-GitHubUserRepo {
 
     .PARAMETER SquashMergeCommitTitle
     The default value for a squash merge commit title:
-        
+
         - PR_TITLE - default to the pull request's title.
         - COMMIT_OR_PR_TITLE - default to the commit's title (if only one commit) or the pull request's title (when more than one commit).,
 
     .PARAMETER SquashMergeCommitMessage
     The default value for a squash merge commit message:
-        
+
         - PR_BODY - default to the pull request's body.
         - COMMIT_MESSAGES - default to the branch's commit messages.
         - BLANK - default to a blank commit message.,
 
     .PARAMETER MergeCommitTitle
     The default value for a merge commit title.
-        
+
         - PR_TITLE - default to the pull request's title.
         - MERGE_MESSAGE - default to the classic title for a merge message (e.g., Merge pull request #123 from branch-name).,
 
     .PARAMETER MergeCommitMessage
     The default value for a merge commit message.
-        
+
         - PR_TITLE - default to the pull request's title.
         - PR_BODY - default to the pull request's body.
         - BLANK - default to a blank commit message.,

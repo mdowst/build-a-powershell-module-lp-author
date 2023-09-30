@@ -11,16 +11,21 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
-            
+        env: # Or as an environment variable
+          GITHHUBTOKEN: ${{ secrets.GITHHUBTOKEN }}
+          TOKENOWNER: ${{ secrets.TOKENOWNER }}
+
       - name: Install from ModuleBuilder
         shell: pwsh
         run: |
           Set-PSRepository PSGallery -InstallationPolicy Trusted
-          Install-Module ModuleBuilder
+          Install-Module ModuleBuilder,PSScriptAnalyzer
+          Install-Module Pester -MinimumVersion 5.5.0
 
       - name: Run build.ps1
         shell: pwsh
         run: .\build.ps1
+        
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
