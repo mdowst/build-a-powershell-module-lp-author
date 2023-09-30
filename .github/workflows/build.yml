@@ -8,7 +8,10 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
-        
+        env: # Or as an environment variable
+          GITHUBTOKEN: ${{ secrets.GITHUBTOKEN }}
+          TOKENOWNER: ${{ secrets.TOKENOWNER }}
+
       - name: Install from ModuleBuilder
         shell: pwsh
         run: |
@@ -19,9 +22,7 @@ jobs:
       - name: Run build.ps1
         shell: pwsh
         run: .\build.ps1
-        env:
-          GITHUBTOKEN: ${{ secrets.GITHUBTOKEN }}
-          TOKENOWNER: ${{ secrets.TOKENOWNER }}
+        
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
