@@ -2,8 +2,9 @@ name: build module
 
 on:
   push:
-    tags:
-      - 'v*'
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 
 jobs:
   build-module:
@@ -21,7 +22,9 @@ jobs:
 
       - name: Run build
         shell: pwsh
-        run: .\build.ps1 -Version "${{github.ref}}"
+        run: |
+          $Version = git describe --tags --abbrev=0 
+          .\build.ps1 -Version $Version
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v3

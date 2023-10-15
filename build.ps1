@@ -20,4 +20,4 @@ Build-Module -SourcePath .\Source -OutputDirectory ..\Build -Version $VersionNum
 $psd1 = Get-ChildItem .\Build -Filter 'RocinanteGitHub.psd1' -Recurse | Select-Object -Last 1 
 $nuspec = Copy-Item -Path .\Source\RocinanteGitHub.nuspec -Destination $psd1.DirectoryName -PassThru
 
-.'nuget.exe' pack "$($nuspec.FullName)" -OutputDirectory ..\Build -Version "$($VersionNumber)"
+.'nuget.exe' pack "$($nuspec.FullName)" -OutputDirectory .\Build -Version "$($VersionNumber)"
