@@ -19,7 +19,7 @@ jobs:
           Install-Module ModuleBuilder,PSScriptAnalyzer
           Install-Module Pester -MinimumVersion 5.5.0
 
-      - name: Run build.ps1
+      - name: Run build
         shell: pwsh
         run: .\build.ps1 -Version "${{github.ref}}"
 
@@ -34,6 +34,7 @@ jobs:
     name: Test Module in Windows
     runs-on: windows-latest
     steps:
+      - uses: actions/checkout@v4
       - uses: actions/download-artifact@v3
         with:
           name: my-build
@@ -45,10 +46,34 @@ jobs:
           Set-PSRepository PSGallery -InstallationPolicy Trusted
           Install-Module Pester -MinimumVersion 5.5.0
 
-      - name: Test build.ps1
+      - name: Test build
         shell: pwsh
         run: .\test-build.ps1
         env: # Or as an environment variable
           GITHUBTOKEN: ${{ secrets.GITHUBTOKEN }}
           TOKENOWNER: ${{ secrets.TOKENOWNER }}
           
+  test-module-linux:
+    needs: build-module
+    name: Test Module in Linux
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v3
+        with:
+          name: my-build
+          path: Build
+
+      - name: Install Modules
+        shell: pwsh
+        run: |
+          Set-PSRepository PSGallery -InstallationPolicy Trusted
+          Install-Module Pester -MinimumVersion 5.5.0
+
+      - name: Test build
+        shell: pwsh
+        run: .\test-build.ps1
+        env: # Or as an environment variable
+          GITHUBTOKEN: ${{ secrets.GITHUBTOKEN }}
+          TOKENOWNER: ${{ secrets.TOKENOWNER }}
+                  
