@@ -1,6 +1,9 @@
 name: build module
 
-on: [push]
+on:
+  push:
+    tags:
+      - 'v*'
 
 jobs:
   build-and-publish-module:
@@ -18,7 +21,7 @@ jobs:
 
       - name: Run build.ps1
         shell: pwsh
-        run: .\build.ps1
+        run: .\build.ps1 -Version ${{github.ref}}
         env: # Or as an environment variable
           GITHUBTOKEN: ${{ secrets.GITHUBTOKEN }}
           TOKENOWNER: ${{ secrets.TOKENOWNER }}
