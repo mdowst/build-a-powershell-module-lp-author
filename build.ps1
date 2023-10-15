@@ -3,7 +3,7 @@ param(
     [string]$Version = 'v1.2.3'
 )
 
-$VersionNumber = [version]::parse($Version.TrimStart('v'))
+$VersionNumber = [version]::parse($Version.Split('/')[-1].TrimStart('v'))
 Set-Location $PSScriptRoot
 
 Get-ChildItem -Path .\Build -Exclude 'nuget.exe' | Remove-Item -Recurse -Force
@@ -19,7 +19,7 @@ $config = New-PesterConfiguration
 $config.Output.Verbosity = 'Detailed'
 $config.Run.Path = (Join-Path $PSScriptRoot 'Source\Test')
 $config.Run.Throw = $true
-#Invoke-Pester -Configuration $config
+Invoke-Pester -Configuration $config
 
 
 $psd1 = Get-ChildItem .\Build -Filter 'RocinanteGitHub.psd1' -Recurse | Select-Object -Last 1 

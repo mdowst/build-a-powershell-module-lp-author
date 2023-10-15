@@ -21,7 +21,7 @@ jobs:
 
       - name: Run build.ps1
         shell: pwsh
-        run: .\build.ps1 -Version ${{github.ref}}
+        run: .\build.ps1 -Version "${{github.ref}}"
         env: # Or as an environment variable
           GITHUBTOKEN: ${{ secrets.GITHUBTOKEN }}
           TOKENOWNER: ${{ secrets.TOKENOWNER }}
@@ -32,4 +32,31 @@ jobs:
           name: my-build
           path: Build
         
+  test-module-linux:
+    name: Run build and upload artifacts
+    runs-on: windows-latest
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: my-build
 
+      - name: Install Modules
+        shell: pwsh
+        run: |
+          Set-PSRepository PSGallery -InstallationPolicy Trusted
+          Install-Module ModuleBuilder,PSScriptAnalyzer
+          Install-Module Pester -MinimumVersion 5.5.0
+
+      - name: Run build.ps1
+        shell: pwsh
+        run: .\build.ps1 -Version ${{github.ref}}
+        env: # Or as an environment variable
+          GITHUBTOKEN: ${{ secrets.GITHUBTOKEN }}
+          TOKENOWNER: ${{ secrets.TOKENOWNER }}
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: my-build
+          path: Build
+          
