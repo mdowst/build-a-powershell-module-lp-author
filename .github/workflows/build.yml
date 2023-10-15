@@ -31,7 +31,7 @@ jobs:
         
   test-module-windows:
     needs: build-module
-    name: Run build and upload artifacts
+    name: Test Module in Windows
     runs-on: windows-latest
     steps:
       - uses: actions/download-artifact@v3
@@ -45,7 +45,7 @@ jobs:
           Set-PSRepository PSGallery -InstallationPolicy Trusted
           Install-Module Pester -MinimumVersion 5.5.0
 
-      - name: Run build.ps1
+      - name: Test build.ps1
         shell: pwsh
         run: .\test-build.ps1
         env: # Or as an environment variable
