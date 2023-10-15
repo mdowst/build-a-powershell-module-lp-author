@@ -6,7 +6,7 @@ param(
 $VersionNumber = [version]::parse($Version.Split('/')[-1].TrimStart('v'))
 Set-Location $PSScriptRoot
 
-Get-ChildItem -Path .\Build -Exclude 'nuget.exe' | Remove-Item -Recurse -Force
+Get-ChildItem -Path .\Build | Remove-Item -Recurse -Force
 
 $linter = . '.\Source\Test\ScriptAnalyzer\ScriptAnalyzer.Linter.ps1'
 if ($linter) {
@@ -18,8 +18,4 @@ Build-Module -SourcePath .\Source -OutputDirectory ..\Build -Version $VersionNum
 $psd1 = Get-ChildItem .\Build -Filter 'RocinanteGitHub.psd1' -Recurse | Select-Object -Last 1 
 $nuspec = Copy-Item -Path .\Source\RocinanteGitHub.nuspec -Destination $psd1.DirectoryName -PassThru
 
-Set-Location .\Build 
-
 .'nuget.exe' pack "$($nuspec.FullName)" -OutputDirectory ..\PSRepo -Version "$($VersionNumber)"
-
-Set-Location $PSScriptRoot

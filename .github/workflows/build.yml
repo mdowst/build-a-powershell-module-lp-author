@@ -22,9 +22,6 @@ jobs:
       - name: Run build.ps1
         shell: pwsh
         run: .\build.ps1 -Version "${{github.ref}}"
-        env: # Or as an environment variable
-          GITHUBTOKEN: ${{ secrets.GITHUBTOKEN }}
-          TOKENOWNER: ${{ secrets.TOKENOWNER }}
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
@@ -40,6 +37,7 @@ jobs:
       - uses: actions/download-artifact@v3
         with:
           name: my-build
+          path: Build
 
       - name: Install Modules
         shell: pwsh
